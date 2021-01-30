@@ -2,27 +2,35 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '../components/Login.vue'
 import Home from '../components/Home.vue'
-Vue.use(Router)
+import Welcome from '../components/Welcome.vue'
+import Users from '../components/user/Users.vue'
 
-const router =  new Router({
+Vue.use(Router)
+const router = new Router({
   routes: [
     //添加重定向
     { path: '/', redirect: '/login' },
     { path: '/login', component: Login },   //可以不用配置name属性，用path也可
-    { path: '/home', component: Home }
+    {
+      path: '/home', component: Home,redirect:'/welcome', children: [
+        { path: '/welcome', component: Welcome },
+        {path:'/users',component:Users}
+        
+      ]
+    }
   ]
 })
 //挂载路由导航守卫
-router.beforeEach((to,from,next)=>{
+router.beforeEach((to, from, next) => {
   //to代表将要访问的路径
   //from代表从哪个路径调制而来
   //next()放行
-  if(to.path === '/login'){
+  if (to.path === '/login') {
     return next();
   }
   //获取token
   const tokenStr = sessionStorage.getItem('token');
-  if(!tokenStr){
+  if (!tokenStr) {
     return next('/login')
   }
   next();

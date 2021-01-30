@@ -80,6 +80,7 @@ export default {
           //登录成功后通过sessionStorage保存token,并跳转路由，sessionStorage在浏览器打开期间存在，若关闭则删除
           this.$message.success("登录成功");
           sessionStorage.setItem('token',res.data.token);
+          sessionStorage.setItem('username',res.data.username)
           this.$router.push('/home');
         } else { //输入错误
           return false;
@@ -96,6 +97,7 @@ export default {
 
 <style lang="less" scoped>
 .login_container {
+  background-image: url(../../static/2021.jpg);
   height: 100%;
   background-color: lightblue;
   background-size: 100% 100%;
@@ -105,7 +107,8 @@ export default {
   border-radius: 5px;
   width: 350px;
   padding: 35px 35px 15px;
-  background: #fff;
+   opacity: 0.8;  
+  background: rgb(163, 124, 185);
   border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
   position: absolute;
