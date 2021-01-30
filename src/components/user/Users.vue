@@ -45,7 +45,8 @@
             </el-tooltip>
             <!-- 删除按钮 -->
             <el-tooltip class="item" effect="dark" content="删除" placement="top">
-              <el-button type="danger" icon="el-icon-delete" size="mini"></el-button>
+              <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUserById(scope.row.id)">
+              </el-button>
             </el-tooltip>
             <!-- 分配角色按钮 -->
             <el-tooltip class="item" effect="dark" content="设置权限" placement="top">
@@ -272,7 +273,10 @@
             data: res
           } = await this.$http.post('users', this.addForm)
           if (res.meta.status !== 201) {
-            this.$message.error('添加用户失败')
+
+            if (res.meta.msg === '用户名已存在')
+              return this.$message.error('添加用户名已存在')
+            return this.$message.error('添加用户失败')
           }
           this.$message.success('添加用户成功')
           this.addDialogVisible = false //隐藏添加用户对话框
@@ -292,25 +296,50 @@
         }
         this.editForm = res.data
       },
-      editDialogClose(){//修改用户对话框关闭
+      editDialogClose() { //修改用户对话框关闭
         this.$refs.editFormRef.resetFields()
       },
-      editUser(id){ //提交修改
-         this.$refs.editFormRef.validate(async valid=>{
-           if(!valid) return 
-           //提交用户修改
-           const {data:res} = await this.$http.put(`users/${this.editForm.id}`,{
-              email:this.editForm.email,
-              mobile:this.editForm.mobile
-           })
-           if(res.meta.status!==200) return this.$message.error('更新用户信息失败')
-           //关闭对话框
-           this.editDialogVisible = false;
-           //刷新数据列表
-           this.getUserList()
-           //提示修改成功
-           this.$message.success('修改用户信息成功')
-         }) 
+      editUser(id) { //提交修改
+        this.$refs.editFormRef.validate(async valid => {
+          if (!valid) return
+          //提交用户修改
+          const {
+            data: res
+          } = await this.$http.put(`users/${this.editForm.id}`, {
+            email: this.editForm.email,
+            mobile: this.editForm.mobile
+          })
+          if (res.meta.status !== 200) return this.$message.error('更新用户信息失败')
+          //关闭对话框
+          this.editDialogVisible = false;
+          //刷新数据列表
+          this.getUserList()
+          //提示修改成功
+          this.$message.success('修改用户信息成功')
+        })
+      },
+      //删除用户
+      removeUserById(id) {
+        // console.log(id)
+        //弹框询问是否删除
+        this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          const {
+            data: res
+          } = await this.$http.delete('users/' + id);
+          console.log(res);
+          if (res.meta.status !== 200) return this.$message.error('删除用户失败')
+          this.$message.success('删除成功')
+          this.getUserList();
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+        });
       }
     },
 
