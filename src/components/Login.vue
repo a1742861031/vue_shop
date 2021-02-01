@@ -32,13 +32,14 @@
       <el-checkbox v-model="checked" class="rememberme">记住密码</el-checkbox>
       <el-form-item style="width: 100%">
         <el-button
-          type="primary"
+          type="warning"
           style="width: 100%"
           @click="handleSubmit"
           :loading="logining"
           >登录</el-button
         > 
       </el-form-item>
+      <span class="tip">默认账号admin 密码123456</span>
     </el-form>
   </div>
 </template>
@@ -108,8 +109,8 @@ export default {
   width: 350px;
   padding: 35px 35px 15px;
    opacity: 0.8;  
-  background: rgb(163, 124, 185);
-  border: 1px solid #eaeaea;
+  background: rgb(206, 148, 130);
+  // border: 1px solid #eaeaea;
   box-shadow: 0 0 25px #cac6c6;
   position: absolute;
   left: 50%;
@@ -123,6 +124,10 @@ label.el-checkbox.rememberme {
 .main_title {
   margin: 0 auto;
   text-align: center;
+}
+.tip{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
 }
 </style>
              
