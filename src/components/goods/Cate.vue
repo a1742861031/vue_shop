@@ -312,7 +312,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style style lang="less" scoped>
 .zk-table {
   margin-top: 20px;
 }
