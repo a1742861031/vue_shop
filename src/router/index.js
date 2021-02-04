@@ -7,7 +7,9 @@ import Users from '../components/user/Users.vue'
 import Right from '../components/power/Rights.vue'
 import Roles from '../components/power/Roles.vue'
 import Cate from '../components/goods/Cate.vue'
-import Params from '../components/goods/Params.vue' 
+import Params from '../components/goods/Params.vue'
+import GoodsList from '../components/goods/GoodsList.vue'
+import AddGoods from '../components/goods/AddGoods.vue'
 Vue.use(Router)
 const router = new Router({
   routes: [
@@ -15,14 +17,15 @@ const router = new Router({
     { path: '/', redirect: '/login' },
     { path: '/login', component: Login },   //可以不用配置name属性，用path也可
     {
-      path: '/home', component: Home,redirect:'/welcome', children: [
+      path: '/home', component: Home, redirect: '/welcome', children: [
         { path: '/welcome', component: Welcome },
-        {path:'/users',component:Users},
-        {path:'/rights',component:Right},
-        {path:'/roles',component:Roles},
-        {path:'/categories',component:Cate},
-        {path:'/params',component:Params}
-        
+        { path: '/users', component: Users },
+        { path: '/rights', component: Right },
+        { path: '/roles', component: Roles },
+        { path: '/categories', component: Cate },
+        { path: '/params', component: Params },
+        { path: '/goods', component: GoodsList,},
+        { path:'/addgoods',component:AddGoods}
       ]
     }
   ]

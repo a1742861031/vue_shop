@@ -19,3 +19,12 @@ html, body, #app{
 body .el-table th.gutter {
     display: table-cell !important;
 }
+.el-steps{
+    margin: 15px 0;
+}
+.el-step__title{
+    font-size: 5px;
+}
+.ql-editor{
+    min-height: 300px;
+}
