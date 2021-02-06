@@ -15,7 +15,9 @@ import VueQuillEditor from 'vue-quill-editor'
 import 'quill/dist/quill.core.css' // import styles
 import 'quill/dist/quill.snow.css' // for snow theme
 import 'quill/dist/quill.bubble.css' // for bubble theme
-
+//导入加载进度条
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 
 Vue.config.productionTip = false
@@ -33,10 +35,17 @@ Vue.filter('dateFormat',function(originVal){
   const ss = (dt.getSeconds()+'').padStart(2,'0')
   return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
 })
-axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/'
+// axios.defaults.baseURL = 'http://127.0.0.1:8888/api/private/v1/' //本地地址
+axios.defaults.baseURL = 'http://42.194.129.172:8888/api/private/v1/' //远端地址
+
 //设置请求拦截器，在发送请求前设置请求头
 axios.interceptors.request.use(config=>{
+  NProgress.start()
   config.headers.Authorization = sessionStorage.getItem('token')
+  return config
+})
+axios.interceptors.response.use(config=>{
+  NProgress.done()
   return config
 })
 Vue.prototype.$http = axios
