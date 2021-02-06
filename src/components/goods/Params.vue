@@ -234,7 +234,6 @@ export default {
         return this.$message.error("获取商品分类失败");
       }
       this.cateList = res.data;
-      console.log(this.cateList);
     },
     async getCateParams() {
       //根据所选分类id和所处面板获取对应参数

@@ -214,7 +214,7 @@ export default {
       if (value === "") {
         callback(new Error("请确认密码"));
       } else if (this.surePassword !== this.addForm.password) {
-        console.log(this.surePassword);
+        //console.log(this.surePassword);
         callback(new Error("两次输入密码不一致"));
       } else callback();
     };
@@ -350,7 +350,7 @@ export default {
       const { data: res } = await this.$http.get("users", {
         params: this.queryInfo,
       });
-      console.log(res);
+      //console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("获取用户列表失败");
       }
@@ -444,7 +444,7 @@ export default {
       })
         .then(async () => {
           const { data: res } = await this.$http.delete("users/" + id);
-          console.log(res);
+        // console.log(res);
           if (res.meta.status !== 200)
             return this.$message.error("删除用户失败");
           this.$message.success("删除成功");

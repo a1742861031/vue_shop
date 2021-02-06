@@ -9,7 +9,7 @@
             {{ username }}<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人信息</el-dropdown-item>
+            <el-dropdown-item @click.native="jumpToHome()">个人信息</el-dropdown-item>
             <el-dropdown-item @click.native="logout()"
               >退出登录</el-dropdown-item
             >
@@ -78,12 +78,10 @@ export default {
       //退出登录
       sessionStorage.clear(); //清空token
       this.$router.push("/login"); //回到登录页
-      console.log("退出登录");
     },
     //得到左侧菜单
     async getMenuList() {
       const { data: res } = await this.$http.get("menus");
-      console.log(res);
       if (res.meta.status !== 200) {
         return this.$message.error("获取菜单失败");
       }
@@ -97,7 +95,11 @@ export default {
     saveNavState(activePath){
         sessionStorage.setItem('activePath',activePath);
         this.activePath = activePath
-    }
+    },
+     jumpToHome(){//跳转到首页
+     if( this.$route.path === '/welcome') return
+      this.$router.push('/welcome')
+  }
   },
   created() {
     this.username = sessionStorage.getItem("username"); //通过得到username

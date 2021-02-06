@@ -63,13 +63,14 @@ export default {
     };
   },
   methods: {
+    //传值
+    
     //表单提交，登录
     handleSubmit(event) {
       this.$refs.loginForm2.validate(async (valid) => {
         // console.log(valid)
         if (valid) {
           const { data: res } = await this.$http.post("login", this.loginForm2); //解构赋值data属性 并将赋值给res
-          console.log(res);
           //登录失败
           if (res.meta.status !== 200) {
             if (res.meta.msg === "密码错误")
@@ -82,6 +83,7 @@ export default {
           this.$message.success("登录成功");
           sessionStorage.setItem('token',res.data.token);
           sessionStorage.setItem('username',res.data.username)
+          sessionStorage.setItem('userid',res.data.id)
           this.$router.push('/home');
         } else { //输入错误
           return false;

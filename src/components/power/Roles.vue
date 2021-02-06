@@ -207,7 +207,6 @@ export default {
         return this.$message.error("获取角色列表失败");
       }
       this.roleList = res.data;
-      console.log(this.roleList);
     },
     async removeRightById(role, rightId) {
       //根据id删除指定权限
